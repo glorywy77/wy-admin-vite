@@ -7,8 +7,13 @@ export interface LoginRequestData {
   code: string
 }
 
-export type LoginCodeResponseData = ApiResponseData<string>
+export type LoginCodeResponseData = ApiResponseData<{ codeurl: string }>
 
-export type LoginResponseData = ApiResponseData<{ token: string }>
+export type LoginResponseData = ApiResponseData<{ token: string; expire: string }>
 
-export type UserInfoResponseData = ApiResponseData<{ username: string; roles: string[] }>
+// export type UserInfoResponseData = ApiResponseData<{ username: string; roles: string[] }>
+export type UserInfoResponseData = ApiResponseData<{
+  id: number
+  identity_key: string
+  payload: { exp: number; id: number; orig_iat: number; roles: string[]; username: string }
+}>

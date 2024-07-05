@@ -40,8 +40,11 @@ function createService() {
           // 本系统采用 code === 0 来表示没有业务错误
           return apiData
         case 401:
-          // Token 过期时
-          return logout()
+          // Token 过期时 或者 登录时候验证不通过
+          ElMessage.error(apiData.message || "Error")
+          break
+        // return logout()
+
         default:
           // 不是正确的 code
           ElMessage.error(apiData.message || "Error")

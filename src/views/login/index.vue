@@ -20,6 +20,8 @@ const loginFormRef = ref<FormInstance | null>(null)
 const loading = ref(false)
 /** 验证码图片 URL */
 const codeUrl = ref("")
+// const codeUrl: any = ref("")
+
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
   username: "admin",
@@ -57,6 +59,7 @@ const handleLogin = () => {
     }
   })
 }
+
 /** 创建验证码 */
 const createCode = () => {
   // 先清空验证码的输入
@@ -64,7 +67,7 @@ const createCode = () => {
   // 获取验证码
   codeUrl.value = ""
   getLoginCodeApi().then((res) => {
-    codeUrl.value = res.data
+    codeUrl.value = res.data.codeurl
   })
 }
 
