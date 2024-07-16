@@ -44,9 +44,8 @@ function createService() {
           ElMessage.error(apiData.message || "Error")
           break
         // return logout()
-
         default:
-          // 不是正确的 code
+          // 不是正确的 code （这里且当作是其他响应失败码吧）当打开一个抽屉，确认提交，若出现请求错误（比如权限问题），可以使得后续流程阻塞实现不关闭抽屉
           ElMessage.error(apiData.message || "Error")
           return Promise.reject(new Error("Error"))
       }

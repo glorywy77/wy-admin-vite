@@ -133,6 +133,37 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/system",
+    component: Layouts,
+    name: "System",
+    meta: {
+      title: "系统管理",
+      elIcon: "Operation"
+    },
+    children: [
+      {
+        path: "user",
+        component: () => import("@/views/system/user/index.vue"),
+        name: "User",
+        meta: {
+          title: "用户管理",
+          elIcon: "User",
+          keepAlive: true
+        }
+      },
+      {
+        path: "role",
+        component: () => import("@/views/system/user/index.vue"),
+        name: "Role",
+        meta: {
+          title: "权限管理",
+          elIcon: "Management",
+          keepAlive: true
+        }
+      }
+    ]
+  },
+  {
     path: "/menu",
     component: Layouts,
     redirect: "/menu/menu1",
