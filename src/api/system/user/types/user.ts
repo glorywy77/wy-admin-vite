@@ -3,6 +3,7 @@ export interface CreateOrUpdateUserRequestData {
   userid?: string
   username?: string
   password?: string
+  confirmPassword?: string
   email?: string
   roles?: string[]
   enable?: number
@@ -16,6 +17,8 @@ export interface GetUserRequestData {
   pageSize: number
   /** 查询参数：用户名 */
   username?: string
+
+  email?: string
 }
 
 export interface GetUserData {
@@ -35,9 +38,7 @@ export type GetUserResponseData = ApiResponseData<{
   items: GetUserData[]
 }>
 
-export interface ResetUserPassData {
+export interface DeleteUserData {
   id: number
-  userid: string
   username: string
-  password: string
 }

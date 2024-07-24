@@ -11,10 +11,11 @@ export function createUserDataApi(data: User.CreateOrUpdateUserRequestData) {
 }
 
 /** 删 */
-export function deleteUserDataApi(id: string) {
+export function deleteUserDataApi(data: User.DeleteUserData) {
   return request({
-    url: `user/${id}`,
-    method: "delete"
+    url: `user/delete`,
+    method: "delete",
+    data
   })
 }
 
@@ -39,7 +40,7 @@ export function resetUserPassApi(data: User.CreateOrUpdateUserRequestData) {
 export function getUserDataApi(params: User.GetUserRequestData) {
   return request<User.GetUserResponseData>({
     url: "user/page",
-    method: "post",
+    method: "get",
     params
   })
 }

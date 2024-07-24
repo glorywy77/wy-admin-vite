@@ -152,11 +152,11 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
-        path: "role",
-        component: () => import("@/views/system/user/index.vue"),
-        name: "Role",
+        path: "casbinRule",
+        component: () => import("@/views/system/casbin/index.vue"),
+        name: "CasbinRule",
         meta: {
-          title: "权限管理",
+          title: "接口管理",
           elIcon: "Management",
           keepAlive: true
         }

@@ -13,7 +13,7 @@ export type LoginResponseData = ApiResponseData<{ token: string; expire: string 
 
 // export type UserInfoResponseData = ApiResponseData<{ username: string; roles: string[] }>
 export type UserInfoResponseData = ApiResponseData<{
-  id: number
+  userid: string
   identity_key: string
-  payload: { exp: number; id: number; orig_iat: number; roles: string[]; username: string }
+  payload: { exp: number; userid: number; orig_iat: number; roles: string[]; username: string; enable: number }
 }>
