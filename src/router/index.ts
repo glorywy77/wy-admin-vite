@@ -138,7 +138,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     name: "System",
     meta: {
       title: "系统管理",
-      elIcon: "Operation"
+      elIcon: "Setting"
     },
     children: [
       {
@@ -152,12 +152,32 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
-        path: "casbinRule",
+        path: "role",
         component: () => import("@/views/system/casbin/index.vue"),
-        name: "CasbinRule",
+        name: "Role",
+        meta: {
+          title: "角色管理",
+          elIcon: "Management",
+          keepAlive: true
+        }
+      },
+      {
+        path: "role2",
+        component: () => import("@/views/system/role/index.vue"),
+        name: "Role2",
+        meta: {
+          title: "角色管理2",
+          elIcon: "Management",
+          keepAlive: true
+        }
+      },
+      {
+        path: "api",
+        component: () => import("@/views/system/api/index.vue"),
+        name: "Api",
         meta: {
           title: "接口管理",
-          elIcon: "Management",
+          elIcon: "Operation",
           keepAlive: true
         }
       }

@@ -37,6 +37,7 @@ const DEFAULT_FORM_DATA: CreateOrUpdateUserRequestData = {
   enable: 0,
   remark: ""
 }
+const isButtonDisabled = ref<boolean>(true)
 const dialogVisible = ref<boolean>(false)
 const formRef = ref<FormInstance | null>(null)
 const formData = ref<CreateOrUpdateUserRequestData>(cloneDeep(DEFAULT_FORM_DATA))
@@ -97,6 +98,12 @@ const mutipleSelection = ref<GetUserData[]>([])
 
 const handleSelectionChange = (val: GetUserData[]) => {
   mutipleSelection.value = val
+  if (val.length > 0) {
+    isButtonDisabled.value = false
+  }
+  if (val.length === 0) {
+    isButtonDisabled.value = true
+  }
 }
 const handleBatchDelete = async (mutipleSelection?: GetUserData[]) => {
   if (mutipleSelection) {
@@ -214,7 +221,13 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
       <div class="toolbar-wrapper">
         <div>
           <el-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">新增用户</el-button>
-          <el-button type="danger" :icon="Delete" @click="handleBatchDelete(mutipleSelection)">批量删除</el-button>
+          <el-button
+            type="danger"
+            :icon="Delete"
+            @click="handleBatchDelete(mutipleSelection)"
+            :disabled="isButtonDisabled"
+            >批量删除</el-button
+          >
         </div>
         <div>
           <el-tooltip content="下载">
@@ -245,10 +258,14 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
           <el-table-column prop="create_at" label="创建时间" align="center" />
           <el-table-column prop="update_at" label="更新时间" align="center" />
           <el-table-column prop="remark" label="备注" align="center" />
-          <el-table-column fixed="right" label="操作" width="210" align="center">
+          <el-table-column fixed="right" label="操作" width="250" align="center">
             <template #default="scope">
-              <el-button type="primary" text bg size="small" @click="handleUpdate(scope.row)">修改</el-button>
-              <el-button type="danger" text bg size="small" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button type="primary" text icon="Edit" bg size="small" @click="handleUpdate(scope.row)"
+                >编辑</el-button
+              >
+              <el-button type="danger" text icon="Delete" bg size="small" @click="handleDelete(scope.row)"
+                >删除</el-button
+              >
               <el-button type="warning" text bg size="small" @click="handleResetPass(scope.row)">密码重置</el-button>
             </template>
           </el-table-column>
