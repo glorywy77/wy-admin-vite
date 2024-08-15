@@ -4,7 +4,7 @@ import type * as User from "./types/user"
 /** 增 */
 export function createUserDataApi(data: User.CreateOrUpdateUserRequestData) {
   return request({
-    url: "user/create",
+    url: "sysUser/create",
     method: "post",
     data
   })
@@ -13,7 +13,7 @@ export function createUserDataApi(data: User.CreateOrUpdateUserRequestData) {
 /** 删 */
 export function deleteUserDataApi(data: User.DeleteUserData) {
   return request({
-    url: `user/delete`,
+    url: `sysUser/delete`,
     method: "delete",
     data
   })
@@ -22,7 +22,7 @@ export function deleteUserDataApi(data: User.DeleteUserData) {
 /** 改 */
 export function updateUserDataApi(data: User.CreateOrUpdateUserRequestData) {
   return request({
-    url: "user/update",
+    url: "sysUser/update",
     method: "put",
     data
   })
@@ -30,7 +30,7 @@ export function updateUserDataApi(data: User.CreateOrUpdateUserRequestData) {
 
 export function resetUserPassApi(data: User.CreateOrUpdateUserRequestData) {
   return request({
-    url: `user/resetPass`,
+    url: `sysUser/resetPass`,
     method: "put",
     data
   })
@@ -39,7 +39,7 @@ export function resetUserPassApi(data: User.CreateOrUpdateUserRequestData) {
 /** 查 */
 export function getUserDataApi(params: User.GetUserRequestData) {
   return request<User.GetUserResponseData>({
-    url: "user/page",
+    url: "sysUser/page",
     method: "get",
     params
   })

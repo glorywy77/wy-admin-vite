@@ -17,7 +17,7 @@ import { cloneDeep } from "lodash-es"
 
 defineOptions({
   // 命名当前组件
-  name: "Role"
+  name: "Test"
 })
 
 const loading = ref<boolean>(false)
@@ -28,7 +28,7 @@ const allApisData = ref<any>([])
 //#region 增
 const DEFAULT_FORM_DATA: CreateOrUpdateRoleRequestData = {
   id: undefined,
-  roleName: "",
+  role: "",
   description: ""
 }
 const isButtonDisabled = ref<boolean>(true)
@@ -39,11 +39,12 @@ const formRef = ref<FormInstance | null>(null)
 const formData = ref<CreateOrUpdateRoleRequestData>(cloneDeep(DEFAULT_FORM_DATA))
 const treeRef = ref<InstanceType<typeof ElTree>>()
 const rules: FormRules<CreateOrUpdateRoleRequestData> = {
-  roleName: [{ required: true, trigger: "blur", message: "请输入" }],
+  role: [{ required: true, trigger: "blur", message: "请输入" }],
   description: [{ required: true, trigger: "blur", message: "请输入" }]
 }
 
 const handleCreateOrUpdate = () => {
+  console.log("0")
   loading.value = true
   formData.value.hasApis = treeRef.value!.getCheckedKeys(true) as number[]
   const api = formData.value.id === undefined ? createRoleDataApi : updateRoleDataApi
@@ -77,12 +78,12 @@ const handleAdd = () => {
 
 //#region 删
 const handleDelete = (row: GetRoleData) => {
-  ElMessageBox.confirm(`正在删除：${row.roleName} ，确认删除？`, "提示", {
+  ElMessageBox.confirm(`正在删除：${row.role} ，确认删除？`, "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    deleteRoleDataApi({ roleName: row.roleName }).then(() => {
+    deleteRoleDataApi({ role: row.role }).then(() => {
       ElMessage.success("删除成功")
       getRoleData()
     })
@@ -116,7 +117,7 @@ const handleBatchDelete = async (mutipleSelection?: GetRoleData[]) => {
 
     if (confirmResult === "confirm") {
       const deletePromises = mutipleSelection.map((row) => {
-        return deleteRoleDataApi({ roleName: row.roleName })
+        return deleteRoleDataApi({ role: row.role })
       })
 
       try {
@@ -141,7 +142,7 @@ const handleUpdate = async (row: GetRoleData) => {
   try {
     const [allApisResponse, hasApisResponse] = await Promise.all([
       getRoleAllApisDataApi(),
-      getRoleHasApisDataApi({ roleName: row.roleName })
+      getRoleHasApisDataApi({ role: row.role })
     ])
 
     allApisData.value = allApisResponse.data.allApis.treeData
@@ -159,14 +160,14 @@ const handleUpdate = async (row: GetRoleData) => {
 const RoleData = ref<GetRoleData[]>([])
 const searchFormRef = ref<FormInstance | null>(null)
 const searchData = reactive({
-  roleName: ""
+  role: ""
 })
 const getRoleData = () => {
   loading.value = true
   getRoleDataApi({
     currentPage: paginationData.currentPage,
     pageSize: paginationData.pageSize,
-    roleName: searchData.roleName || undefined
+    role: searchData.role || undefined
   })
     .then(({ data }) => {
       paginationData.total = data.total
@@ -213,8 +214,8 @@ const prevStep = () => {
   <div class="app-container">
     <el-card v-loading="loading" shadow="never" class="search-wrapper">
       <el-form ref="searchFormRef" :inline="true" :model="searchData">
-        <el-form-item prop="roleName" label="角色名">
-          <el-input v-model="searchData.roleName" placeholder="请输入" />
+        <el-form-item prop="role" label="角色">
+          <el-input v-model="searchData.role" placeholder="请输入" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
@@ -245,8 +246,8 @@ const prevStep = () => {
       </div>
       <div class="table-wrapper">
         <el-table :data="RoleData" @selection-change="handleSelectionChange">
-          <el-table-column type="selection" align="center" />
-          <el-table-column prop="roleName" label="角色名" align="left" />
+          <el-table-column type="selection" width="30" align="center" />
+          <el-table-column prop="role" label="角色" align="left" />
           <el-table-column prop="description" label="描述" align="center" />
           <el-table-column prop="createAt" label="创建时间" align="center" />
           <el-table-column prop="updateAt" label="更新时间" align="center" />
@@ -289,8 +290,8 @@ const prevStep = () => {
 
       <template v-if="activeStep === 0">
         <el-form ref="formRef" :model="formData" :rules="rules" label-width="80px">
-          <el-form-item label="角色名" prop="roleName">
-            <el-input v-model="formData.roleName" style="width: 100%" />
+          <el-form-item label="角色名" prop="role">
+            <el-input v-model="formData.role" style="width: 100%" />
           </el-form-item>
           <el-form-item label="描述" prop="description">
             <el-input v-model="formData.description" type="textarea" />

@@ -11,7 +11,7 @@ export function createApiDataApi(data: Api.CreateOrUpdateApiRequestData) {
 }
 
 /** 删 */
-export function deleteApiDataApi(data: { id: number }) {
+export function deleteApiDataApi(data: { path: string; method: string }) {
   return request({
     url: "sysApi/delete",
     method: "delete",
@@ -34,5 +34,12 @@ export function getApiDataApi(params: Api.GetApiRequestData) {
     url: "sysApi/page",
     method: "get",
     params
+  })
+}
+
+export function getApiGroupsApi() {
+  return request<Api.GetApiResponseData>({
+    url: "sysApi/groups",
+    method: "get"
   })
 }

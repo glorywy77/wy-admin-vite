@@ -61,22 +61,22 @@ export const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
-  {
-    path: "/unocss",
-    component: Layouts,
-    redirect: "/unocss/index",
-    children: [
-      {
-        path: "index",
-        component: () => import("@/views/unocss/index.vue"),
-        name: "UnoCSS",
-        meta: {
-          title: "UnoCSS",
-          svgIcon: "unocss"
-        }
-      }
-    ]
-  },
+  // {
+  //   path: "/unocss",
+  //   component: Layouts,
+  //   redirect: "/unocss/index",
+  //   children: [
+  //     {
+  //       path: "index",
+  //       component: () => import("@/views/unocss/index.vue"),
+  //       name: "UnoCSS",
+  //       meta: {
+  //         title: "UnoCSS",
+  //         svgIcon: "unocss"
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: "/link",
     meta: {
@@ -101,44 +101,221 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
-  },
-  {
-    path: "/table",
-    component: Layouts,
-    redirect: "/table/element-plus",
-    name: "Table",
-    meta: {
-      title: "表格",
-      elIcon: "Grid"
-    },
-    children: [
-      {
-        path: "element-plus",
-        component: () => import("@/views/table/element-plus/index.vue"),
-        name: "ElementPlus",
-        meta: {
-          title: "Element Plus",
-          keepAlive: true
-        }
-      },
-      {
-        path: "vxe-table",
-        component: () => import("@/views/table/vxe-table/index.vue"),
-        name: "VxeTable",
-        meta: {
-          title: "Vxe Table",
-          keepAlive: true
-        }
-      }
-    ]
-  },
+  }
+  // {
+  //   path: "/table",
+  //   component: Layouts,
+  //   redirect: "/table/element-plus",
+  //   name: "Table",
+  //   meta: {
+  //     title: "表格",
+  //     elIcon: "Grid"
+  //   },
+  //   children: [
+  //     {
+  //       path: "element-plus",
+  //       component: () => import("@/views/table/element-plus/index.vue"),
+  //       name: "ElementPlus",
+  //       meta: {
+  //         title: "Element Plus",
+  //         keepAlive: true
+  //       }
+  //     },
+  //     {
+  //       path: "vxe-table",
+  //       component: () => import("@/views/table/vxe-table/index.vue"),
+  //       name: "VxeTable",
+  //       meta: {
+  //         title: "Vxe Table",
+  //         keepAlive: true
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/system",
+  //   component: Layouts,
+  //   name: "System",
+  //   meta: {
+  //     title: "系统管理",
+  //     elIcon: "Setting"
+  //   },
+  //   children: [
+  //     {
+  //       path: "user",
+  //       component: () => import("@/views/system/user/index.vue"),
+  //       name: "User",
+  //       meta: {
+  //         title: "用户管理",
+  //         elIcon: "User",
+  //         keepAlive: true
+  //       }
+  //     },
+  //     {
+  //       path: "role",
+  //       component: () => import("@/views/system/role/index.vue"),
+  //       name: "Role",
+  //       meta: {
+  //         title: "角色管理",
+  //         elIcon: "Management",
+  //         keepAlive: true
+  //       }
+  //     },
+
+  //     {
+  //       path: "api",
+  //       component: () => import("@/views/system/api/index.vue"),
+  //       name: "Api",
+  //       meta: {
+  //         title: "接口管理",
+  //         elIcon: "Operation",
+  //         keepAlive: true
+  //       }
+  //     },
+  //     {
+  //       path: "test",
+  //       component: () => import("@/views/system/test/index.vue"),
+  //       name: "Test",
+  //       meta: {
+  //         title: "测试代码",
+  //         elIcon: "Management",
+  //         keepAlive: false
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/menu",
+  //   component: Layouts,
+  //   redirect: "/menu/menu1",
+  //   name: "Menu",
+  //   meta: {
+  //     title: "多级路由",
+  //     svgIcon: "menu"
+  //   },
+  //   children: [
+  //     {
+  //       path: "menu1",
+  //       component: () => import("@/views/menu/menu1/index.vue"),
+  //       redirect: "/menu/menu1/menu1-1",
+  //       name: "Menu1",
+  //       meta: {
+  //         title: "menu1"
+  //       },
+  //       children: [
+  //         {
+  //           path: "menu1-1",
+  //           component: () => import("@/views/menu/menu1/menu1-1/index.vue"),
+  //           name: "Menu1-1",
+  //           meta: {
+  //             title: "menu1-1",
+  //             keepAlive: true
+  //           }
+  //         },
+  //         {
+  //           path: "menu1-2",
+  //           component: () => import("@/views/menu/menu1/menu1-2/index.vue"),
+  //           redirect: "/menu/menu1/menu1-2/menu1-2-1",
+  //           name: "Menu1-2",
+  //           meta: {
+  //             title: "menu1-2"
+  //           },
+  //           children: [
+  //             {
+  //               path: "menu1-2-1",
+  //               component: () => import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
+  //               name: "Menu1-2-1",
+  //               meta: {
+  //                 title: "menu1-2-1",
+  //                 keepAlive: true
+  //               }
+  //             },
+  //             {
+  //               path: "menu1-2-2",
+  //               component: () => import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
+  //               name: "Menu1-2-2",
+  //               meta: {
+  //                 title: "menu1-2-2",
+  //                 keepAlive: true
+  //               }
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           path: "menu1-3",
+  //           component: () => import("@/views/menu/menu1/menu1-3/index.vue"),
+  //           name: "Menu1-3",
+  //           meta: {
+  //             title: "menu1-3",
+  //             keepAlive: true
+  //           }
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       path: "menu2",
+  //       component: () => import("@/views/menu/menu2/index.vue"),
+  //       name: "Menu2",
+  //       meta: {
+  //         title: "menu2",
+  //         keepAlive: true
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/hook-demo",
+  //   component: Layouts,
+  //   redirect: "/hook-demo/use-fetch-select",
+  //   name: "HookDemo",
+  //   meta: {
+  //     title: "Hook",
+  //     elIcon: "Menu",
+  //     alwaysShow: true
+  //   },
+  //   children: [
+  //     {
+  //       path: "use-fetch-select",
+  //       component: () => import("@/views/hook-demo/use-fetch-select.vue"),
+  //       name: "UseFetchSelect",
+  //       meta: {
+  //         title: "useFetchSelect"
+  //       }
+  //     },
+  //     {
+  //       path: "use-fullscreen-loading",
+  //       component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
+  //       name: "UseFullscreenLoading",
+  //       meta: {
+  //         title: "useFullscreenLoading"
+  //       }
+  //     },
+  //     {
+  //       path: "use-watermark",
+  //       component: () => import("@/views/hook-demo/use-watermark.vue"),
+  //       name: "UseWatermark",
+  //       meta: {
+  //         title: "useWatermark"
+  //       }
+  //     }
+  //   ]
+  // }
+]
+
+/**
+ * 动态路由
+ * 用来放置有权限 (Roles 属性) 的路由
+ * 必须带有 Name 属性
+ */
+export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: "/system",
     component: Layouts,
     name: "System",
     meta: {
       title: "系统管理",
-      elIcon: "Setting"
+      elIcon: "Setting",
+      roles: ["admin", "ops"]
     },
     children: [
       {
@@ -148,29 +325,22 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: "用户管理",
           elIcon: "User",
-          keepAlive: true
+          keepAlive: true,
+          roles: ["admin", "ops"]
         }
       },
       {
         path: "role",
-        component: () => import("@/views/system/casbin/index.vue"),
+        component: () => import("@/views/system/role/index.vue"),
         name: "Role",
         meta: {
           title: "角色管理",
-          elIcon: "Management",
-          keepAlive: true
+          elIcon: "Tickets",
+          keepAlive: true,
+          roles: ["admin"]
         }
       },
-      {
-        path: "role2",
-        component: () => import("@/views/system/role/index.vue"),
-        name: "Role2",
-        meta: {
-          title: "角色管理2",
-          elIcon: "Management",
-          keepAlive: true
-        }
-      },
+
       {
         path: "api",
         component: () => import("@/views/system/api/index.vue"),
@@ -178,135 +348,46 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: "接口管理",
           elIcon: "Operation",
-          keepAlive: true
+          keepAlive: true,
+          roles: ["admin"]
+        }
+      },
+      {
+        path: "test",
+        component: () => import("@/views/system/test/index.vue"),
+        name: "Test",
+        meta: {
+          title: "测试代码",
+          elIcon: "More",
+          keepAlive: false,
+          roles: ["admin", "ops"]
         }
       }
     ]
   },
   {
-    path: "/menu",
+    path: "/monitor",
     component: Layouts,
-    redirect: "/menu/menu1",
-    name: "Menu",
+    name: "Monitor",
     meta: {
-      title: "多级路由",
-      svgIcon: "menu"
+      title: "监控",
+      elIcon: "Monitor",
+      roles: ["admin", "ops"]
     },
     children: [
       {
-        path: "menu1",
-        component: () => import("@/views/menu/menu1/index.vue"),
-        redirect: "/menu/menu1/menu1-1",
-        name: "Menu1",
+        path: "auditLog",
+        component: () => import("@/views/monitor/auditLog/index.vue"),
+        name: "AuditLog",
         meta: {
-          title: "menu1"
-        },
-        children: [
-          {
-            path: "menu1-1",
-            component: () => import("@/views/menu/menu1/menu1-1/index.vue"),
-            name: "Menu1-1",
-            meta: {
-              title: "menu1-1",
-              keepAlive: true
-            }
-          },
-          {
-            path: "menu1-2",
-            component: () => import("@/views/menu/menu1/menu1-2/index.vue"),
-            redirect: "/menu/menu1/menu1-2/menu1-2-1",
-            name: "Menu1-2",
-            meta: {
-              title: "menu1-2"
-            },
-            children: [
-              {
-                path: "menu1-2-1",
-                component: () => import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
-                name: "Menu1-2-1",
-                meta: {
-                  title: "menu1-2-1",
-                  keepAlive: true
-                }
-              },
-              {
-                path: "menu1-2-2",
-                component: () => import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
-                name: "Menu1-2-2",
-                meta: {
-                  title: "menu1-2-2",
-                  keepAlive: true
-                }
-              }
-            ]
-          },
-          {
-            path: "menu1-3",
-            component: () => import("@/views/menu/menu1/menu1-3/index.vue"),
-            name: "Menu1-3",
-            meta: {
-              title: "menu1-3",
-              keepAlive: true
-            }
-          }
-        ]
-      },
-      {
-        path: "menu2",
-        component: () => import("@/views/menu/menu2/index.vue"),
-        name: "Menu2",
-        meta: {
-          title: "menu2",
-          keepAlive: true
+          title: "审计日志",
+          elIcon: "Reading",
+          keepAlive: true,
+          roles: ["admin", "ops"]
         }
       }
     ]
   },
-  {
-    path: "/hook-demo",
-    component: Layouts,
-    redirect: "/hook-demo/use-fetch-select",
-    name: "HookDemo",
-    meta: {
-      title: "Hook",
-      elIcon: "Menu",
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: "use-fetch-select",
-        component: () => import("@/views/hook-demo/use-fetch-select.vue"),
-        name: "UseFetchSelect",
-        meta: {
-          title: "useFetchSelect"
-        }
-      },
-      {
-        path: "use-fullscreen-loading",
-        component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
-        name: "UseFullscreenLoading",
-        meta: {
-          title: "useFullscreenLoading"
-        }
-      },
-      {
-        path: "use-watermark",
-        component: () => import("@/views/hook-demo/use-watermark.vue"),
-        name: "UseWatermark",
-        meta: {
-          title: "useWatermark"
-        }
-      }
-    ]
-  }
-]
-
-/**
- * 动态路由
- * 用来放置有权限 (Roles 属性) 的路由
- * 必须带有 Name 属性
- */
-export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: "/permission",
     component: Layouts,

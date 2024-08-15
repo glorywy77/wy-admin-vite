@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from "vue"
+import { reactive, ref, watch, onMounted } from "vue"
 import {
   createUserDataApi,
   deleteUserDataApi,
@@ -16,6 +16,9 @@ import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "elem
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import { cloneDeep } from "lodash-es"
+
+import { getRoleListApi } from "@/api/system/role"
+import { type GetRoleData } from "@/api/system/role/types/role"
 
 defineOptions({
   // 命名当前组件
@@ -37,6 +40,7 @@ const DEFAULT_FORM_DATA: CreateOrUpdateUserRequestData = {
   enable: 0,
   remark: ""
 }
+
 const isButtonDisabled = ref<boolean>(true)
 const dialogVisible = ref<boolean>(false)
 const formRef = ref<FormInstance | null>(null)
@@ -134,7 +138,7 @@ const handleBatchDelete = async (mutipleSelection?: GetUserData[]) => {
         console.error("批量删除用户时发生错误", error)
         ElMessage.error("删除失败，请检查网络或稍后重试")
       }
-      await getUserData()
+      getUserData()
     }
   }
 }
@@ -188,6 +192,15 @@ const getUserData = () => {
       loading.value = false
     })
 }
+
+//# 查询可以选择的角色
+const RoleData = ref<GetRoleData[]>([])
+const RoleSelect = () => {
+  getRoleListApi().then(({ data }) => {
+    RoleData.value = data.items
+  })
+}
+
 const handleSearch = () => {
   paginationData.currentPage === 1 ? getUserData() : (paginationData.currentPage = 1)
 }
@@ -195,6 +208,11 @@ const resetSearch = () => {
   searchFormRef.value?.resetFields()
   handleSearch()
 }
+
+onMounted(() => {
+  RoleSelect()
+})
+
 //#endregion
 
 /** 监听分页参数的变化 */
@@ -317,11 +335,9 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
         </el-form-item>
 
         <el-form-item prop="roles" label="角色" v-if="formData.roles !== undefined">
-          <el-checkbox-group v-model="formData.roles">
-            <el-checkbox value="admin" name="roles">admin</el-checkbox>
-            <el-checkbox value="dev" name="roles">dev</el-checkbox>
-            <el-checkbox value="ops" name="roles">ops</el-checkbox>
-          </el-checkbox-group>
+          <el-select v-model="formData.roles" multiple placeholder="请选择角色" style="width: 240px">
+            <el-option v-for="item in RoleData" :key="item.roleName" :label="item.roleName" :value="item.roleName" />
+          </el-select>
         </el-form-item>
 
         <el-form-item prop="remark" label="备注" v-if="formData.remark !== undefined">

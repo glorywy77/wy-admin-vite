@@ -12,3 +12,13 @@ export const setToken = (token: string) => {
 export const removeToken = () => {
   Cookies.remove(CacheKey.TOKEN)
 }
+
+//添加session相关的内容
+// export const setGfsessionid = (gfsessionid: string) => {
+//   Cookies.set("gfsessionid", gfsessionid)
+//   return
+// }
+
+// export const getGfsessionid = () => {
+//   return Cookies.get("gfsessionid")
+// }

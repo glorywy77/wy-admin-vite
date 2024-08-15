@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { reactive, ref, watch } from "vue"
-import { createApiDataApi, deleteApiDataApi, updateApiDataApi, getApiDataApi } from "@/api/system/api"
+import { reactive, ref, watch, onMounted } from "vue"
+import { createApiDataApi, deleteApiDataApi, updateApiDataApi, getApiDataApi, getApiGroupsApi } from "@/api/system/api"
 import { type CreateOrUpdateApiRequestData, type GetApiData } from "@/api/system/api/types/api"
 import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import { cloneDeep } from "lodash-es"
-
+import { forEach } from "lodash"
 defineOptions({
   // 命名当前组件
   name: "Api"
@@ -15,7 +15,7 @@ defineOptions({
 const loading = ref<boolean>(false)
 const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
 
-//#region 增
+//#region 表单提交
 const DEFAULT_FORM_DATA: CreateOrUpdateApiRequestData = {
   id: undefined,
   path: "",
@@ -28,8 +28,8 @@ const dialogVisible = ref<boolean>(false)
 const formRef = ref<FormInstance | null>(null)
 const formData = ref<CreateOrUpdateApiRequestData>(cloneDeep(DEFAULT_FORM_DATA))
 const formRules: FormRules<CreateOrUpdateApiRequestData> = {
-  path: [{ required: true, trigger: "change", message: "请输入路径" }],
-  method: [{ required: true, trigger: "change", message: "请选择方法" }],
+  path: [{ required: true, trigger: "blur", message: "请输入路径" }],
+  method: [{ required: true, trigger: "blur", message: "请选择方法" }],
   apiGroup: [{ required: true, trigger: "blur", message: "请输入接口组" }]
 }
 const handleCreateOrUpdate = () => {
@@ -54,6 +54,11 @@ const resetForm = () => {
 }
 //#endregion
 
+//#region 增
+const handleAdd = () => {
+  dialogVisible.value = true
+}
+
 //#region 删
 const handleDelete = (row: GetApiData) => {
   ElMessageBox.confirm(`正在删除：${row.path} ${row.method} ${row.apiGroup}，确认删除？`, "提示", {
@@ -61,7 +66,7 @@ const handleDelete = (row: GetApiData) => {
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    deleteApiDataApi({ id: row.id }).then(() => {
+    deleteApiDataApi({ path: row.path, method: row.method }).then(() => {
       ElMessage.success("删除成功")
       getApiData()
     })
@@ -95,7 +100,7 @@ const handleBatchDelete = async (mutipleSelection?: GetApiData[]) => {
 
     if (confirmResult === "confirm") {
       const deletePromises = mutipleSelection.map((row) => {
-        return deleteApiDataApi({ id: row.id })
+        return deleteApiDataApi({ path: row.path, method: row.method })
       })
 
       try {
@@ -105,7 +110,7 @@ const handleBatchDelete = async (mutipleSelection?: GetApiData[]) => {
         console.error("批量删除用户时发生错误", error)
         ElMessage.error("删除失败，请检查网络或稍后重试")
       }
-      await getApiData()
+      getApiData()
     }
   }
 }
@@ -127,6 +132,7 @@ const searchData = reactive({
   method: "",
   apiGroup: ""
 })
+
 const getApiData = () => {
   loading.value = true
   getApiDataApi({
@@ -147,6 +153,25 @@ const getApiData = () => {
       loading.value = false
     })
 }
+
+const ApiGroups = ref<Array<string>>([])
+const apiGroupSelect = () => {
+  getApiGroupsApi()
+    .then(({ data }) => {
+      forEach(data.items, (item) => {
+        if (!ApiGroups.value.includes(item.apiGroup)) {
+          ApiGroups.value.push(item.apiGroup)
+        }
+      })
+    })
+    .catch(() => {
+      ApiData.value = []
+    })
+    .finally(() => {
+      loading.value = false
+    })
+}
+
 const handleSearch = () => {
   paginationData.currentPage === 1 ? getApiData() : (paginationData.currentPage = 1)
 }
@@ -154,6 +179,11 @@ const resetSearch = () => {
   searchFormRef.value?.resetFields()
   handleSearch()
 }
+
+onMounted(() => {
+  apiGroupSelect()
+})
+
 //#endregion
 
 /** 监听分页参数的变化 */
@@ -171,7 +201,15 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getApiD
           <el-input v-model="searchData.method" placeholder="请输入" />
         </el-form-item>
         <el-form-item prop="apiGroup" label="接口组">
-          <el-input v-model="searchData.apiGroup" placeholder="请输入" />
+          <el-select
+            v-model="searchData.apiGroup"
+            filterable
+            allow-create
+            placeholder="请选择接口组"
+            style="width: 240px"
+          >
+            <el-option v-for="item in ApiGroups" :key="item" :label="item" :value="item" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
@@ -182,7 +220,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getApiD
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">新增接口</el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增接口</el-button>
           <el-button
             type="danger"
             :icon="Delete"
@@ -254,10 +292,14 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getApiD
           </el-select>
         </el-form-item>
         <el-form-item prop="apiGroup" label="接口组">
-          <el-select v-model="formData.apiGroup" placeholder="选择接口组">
-            <el-option label="sysUser" value="sysUser" />
-            <el-option label="sysApi" value="sysApi" />
-            <el-option label="sysRole" value="sysRole" />
+          <el-select
+            v-model="formData.apiGroup"
+            filterable
+            allow-create
+            placeholder="请选择接口组"
+            style="width: 240px"
+          >
+            <el-option v-for="item in ApiGroups" :key="item" :label="item" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item prop="description" label="描述">
