@@ -7,7 +7,9 @@ export interface LoginRequestData {
   code: string
 }
 
-export type LoginCodeResponseData = ApiResponseData<{ codeurl: string }>
+export type LoginCodeResponseData = ApiResponseData<{ captchaSrc: ArrayBuffer }>
+
+// export type CaptchaResponseData = ApiResponseData<{ captchaSrc: ArrayBuffer }>
 
 export type LoginResponseData = ApiResponseData<{ token: string; expire: string }>
 

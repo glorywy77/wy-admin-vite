@@ -3,7 +3,7 @@ import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useUserStore } from "@/store/modules/user"
 import { type FormInstance, type FormRules } from "element-plus"
-import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
+import { User, Lock, Key } from "@element-plus/icons-vue"
 import { getLoginCodeApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
@@ -19,7 +19,7 @@ const loginFormRef = ref<FormInstance | null>(null)
 /** 登录按钮 Loading */
 const loading = ref(false)
 /** 验证码图片 URL */
-const codeUrl = ref("")
+const imageSrc = ref("")
 // const codeUrl: any = ref("")
 
 /** 登录表单数据 */
@@ -64,10 +64,11 @@ const handleLogin = () => {
 const createCode = () => {
   // 先清空验证码的输入
   loginFormData.code = ""
-  // 获取验证码
-  codeUrl.value = ""
+
+  // 获取验证码图片
   getLoginCodeApi().then((res) => {
-    codeUrl.value = res.data.codeurl
+    const base64String = res.data.captchaSrc
+    imageSrc.value = `data:image/jpeg;base64,${base64String}`
   })
 }
 
@@ -119,18 +120,7 @@ createCode()
               size="large"
             >
               <template #append>
-                <el-image :src="codeUrl" @click="createCode" draggable="false">
-                  <template #placeholder>
-                    <el-icon>
-                      <Picture />
-                    </el-icon>
-                  </template>
-                  <template #error>
-                    <el-icon>
-                      <Loading />
-                    </el-icon>
-                  </template>
-                </el-image>
+                <img :src="imageSrc" @click="createCode" />
               </template>
             </el-input>
           </el-form-item>

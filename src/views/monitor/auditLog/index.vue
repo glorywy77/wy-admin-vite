@@ -151,14 +151,14 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getAudi
       <div class="table-wrapper">
         <el-table :data="AuditLogData" border show-overflow-tooltip>
           <el-table-column prop="createAt" label="创建时间" width="200" align="center" />
-          <el-table-column prop="traceId" label="traceId" align="left" />
+          <el-table-column prop="traceId" label="traceId" align="center" />
           <el-table-column prop="userName" label="用户名" align="center" />
           <el-table-column prop="ip" label="地址" align="center" />
           <el-table-column prop="path" label="路径" align="center" />
           <el-table-column prop="method" label="方法" align="center" />
           <el-table-column prop="params" label="参数" align="center">
             <template #default="scope">
-              {{ JSON.stringify(scope.row.params) }}
+              {{ scope.row.params ? JSON.stringify(scope.row.params) : "" }}
             </template>
           </el-table-column>
           <el-table-column prop="httpCode" label="状态码" align="center">

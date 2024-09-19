@@ -133,58 +133,6 @@ export const constantRoutes: RouteRecordRaw[] = [
   //   ]
   // },
   // {
-  //   path: "/system",
-  //   component: Layouts,
-  //   name: "System",
-  //   meta: {
-  //     title: "系统管理",
-  //     elIcon: "Setting"
-  //   },
-  //   children: [
-  //     {
-  //       path: "user",
-  //       component: () => import("@/views/system/user/index.vue"),
-  //       name: "User",
-  //       meta: {
-  //         title: "用户管理",
-  //         elIcon: "User",
-  //         keepAlive: true
-  //       }
-  //     },
-  //     {
-  //       path: "role",
-  //       component: () => import("@/views/system/role/index.vue"),
-  //       name: "Role",
-  //       meta: {
-  //         title: "角色管理",
-  //         elIcon: "Management",
-  //         keepAlive: true
-  //       }
-  //     },
-
-  //     {
-  //       path: "api",
-  //       component: () => import("@/views/system/api/index.vue"),
-  //       name: "Api",
-  //       meta: {
-  //         title: "接口管理",
-  //         elIcon: "Operation",
-  //         keepAlive: true
-  //       }
-  //     },
-  //     {
-  //       path: "test",
-  //       component: () => import("@/views/system/test/index.vue"),
-  //       name: "Test",
-  //       meta: {
-  //         title: "测试代码",
-  //         elIcon: "Management",
-  //         keepAlive: false
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
   //   path: "/menu",
   //   component: Layouts,
   //   redirect: "/menu/menu1",
@@ -351,17 +299,6 @@ export const dynamicRoutes: RouteRecordRaw[] = [
           keepAlive: true,
           roles: ["admin"]
         }
-      },
-      {
-        path: "test",
-        component: () => import("@/views/system/test/index.vue"),
-        name: "Test",
-        meta: {
-          title: "测试代码",
-          elIcon: "More",
-          keepAlive: false,
-          roles: ["admin", "ops"]
-        }
       }
     ]
   },
@@ -382,6 +319,17 @@ export const dynamicRoutes: RouteRecordRaw[] = [
         meta: {
           title: "审计日志",
           elIcon: "Reading",
+          keepAlive: true,
+          roles: ["admin", "ops"]
+        }
+      },
+      {
+        path: "aliEcs",
+        component: () => import("@/views/monitor/aliEcs/index.vue"),
+        name: "AliEcs",
+        meta: {
+          title: "ECS",
+          elIcon: "Cpu",
           keepAlive: true,
           roles: ["admin", "ops"]
         }

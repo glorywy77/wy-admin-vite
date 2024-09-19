@@ -276,7 +276,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
           <el-table-column prop="create_at" label="创建时间" align="center" />
           <el-table-column prop="update_at" label="更新时间" align="center" />
           <el-table-column prop="remark" label="备注" align="center" />
-          <el-table-column fixed="right" label="操作" width="250" align="center">
+          <el-table-column fixed="right" label="操作" width="260" align="center">
             <template #default="scope">
               <el-button type="primary" text icon="Edit" bg size="small" @click="handleUpdate(scope.row)"
                 >编辑</el-button
@@ -284,7 +284,9 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
               <el-button type="danger" text icon="Delete" bg size="small" @click="handleDelete(scope.row)"
                 >删除</el-button
               >
-              <el-button type="warning" text bg size="small" @click="handleResetPass(scope.row)">密码重置</el-button>
+              <el-button type="warning" text icon="Key" bg size="small" @click="handleResetPass(scope.row)"
+                >密码重置</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
