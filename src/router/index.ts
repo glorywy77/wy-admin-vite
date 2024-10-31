@@ -1,7 +1,8 @@
 import { type RouteRecordRaw, createRouter } from "vue-router"
 import { history, flatMultiLevelRoutes } from "./helper"
 import routeSettings from "@/config/route"
-
+import { getMenuDataApi } from "@/api/system/menu"
+import { type GetMenuData } from "@/api/system/menu/types/menu"
 const Layouts = () => import("@/layouts/index.vue")
 
 /**
@@ -61,22 +62,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
-  // {
-  //   path: "/unocss",
-  //   component: Layouts,
-  //   redirect: "/unocss/index",
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/unocss/index.vue"),
-  //       name: "UnoCSS",
-  //       meta: {
-  //         title: "UnoCSS",
-  //         svgIcon: "unocss"
-  //       }
-  //     }
-  //   ]
-  // },
+
   {
     path: "/link",
     meta: {
@@ -102,152 +88,6 @@ export const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   }
-  // {
-  //   path: "/table",
-  //   component: Layouts,
-  //   redirect: "/table/element-plus",
-  //   name: "Table",
-  //   meta: {
-  //     title: "表格",
-  //     elIcon: "Grid"
-  //   },
-  //   children: [
-  //     {
-  //       path: "element-plus",
-  //       component: () => import("@/views/table/element-plus/index.vue"),
-  //       name: "ElementPlus",
-  //       meta: {
-  //         title: "Element Plus",
-  //         keepAlive: true
-  //       }
-  //     },
-  //     {
-  //       path: "vxe-table",
-  //       component: () => import("@/views/table/vxe-table/index.vue"),
-  //       name: "VxeTable",
-  //       meta: {
-  //         title: "Vxe Table",
-  //         keepAlive: true
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/menu",
-  //   component: Layouts,
-  //   redirect: "/menu/menu1",
-  //   name: "Menu",
-  //   meta: {
-  //     title: "多级路由",
-  //     svgIcon: "menu"
-  //   },
-  //   children: [
-  //     {
-  //       path: "menu1",
-  //       component: () => import("@/views/menu/menu1/index.vue"),
-  //       redirect: "/menu/menu1/menu1-1",
-  //       name: "Menu1",
-  //       meta: {
-  //         title: "menu1"
-  //       },
-  //       children: [
-  //         {
-  //           path: "menu1-1",
-  //           component: () => import("@/views/menu/menu1/menu1-1/index.vue"),
-  //           name: "Menu1-1",
-  //           meta: {
-  //             title: "menu1-1",
-  //             keepAlive: true
-  //           }
-  //         },
-  //         {
-  //           path: "menu1-2",
-  //           component: () => import("@/views/menu/menu1/menu1-2/index.vue"),
-  //           redirect: "/menu/menu1/menu1-2/menu1-2-1",
-  //           name: "Menu1-2",
-  //           meta: {
-  //             title: "menu1-2"
-  //           },
-  //           children: [
-  //             {
-  //               path: "menu1-2-1",
-  //               component: () => import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
-  //               name: "Menu1-2-1",
-  //               meta: {
-  //                 title: "menu1-2-1",
-  //                 keepAlive: true
-  //               }
-  //             },
-  //             {
-  //               path: "menu1-2-2",
-  //               component: () => import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
-  //               name: "Menu1-2-2",
-  //               meta: {
-  //                 title: "menu1-2-2",
-  //                 keepAlive: true
-  //               }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: "menu1-3",
-  //           component: () => import("@/views/menu/menu1/menu1-3/index.vue"),
-  //           name: "Menu1-3",
-  //           meta: {
-  //             title: "menu1-3",
-  //             keepAlive: true
-  //           }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: "menu2",
-  //       component: () => import("@/views/menu/menu2/index.vue"),
-  //       name: "Menu2",
-  //       meta: {
-  //         title: "menu2",
-  //         keepAlive: true
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/hook-demo",
-  //   component: Layouts,
-  //   redirect: "/hook-demo/use-fetch-select",
-  //   name: "HookDemo",
-  //   meta: {
-  //     title: "Hook",
-  //     elIcon: "Menu",
-  //     alwaysShow: true
-  //   },
-  //   children: [
-  //     {
-  //       path: "use-fetch-select",
-  //       component: () => import("@/views/hook-demo/use-fetch-select.vue"),
-  //       name: "UseFetchSelect",
-  //       meta: {
-  //         title: "useFetchSelect"
-  //       }
-  //     },
-  //     {
-  //       path: "use-fullscreen-loading",
-  //       component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
-  //       name: "UseFullscreenLoading",
-  //       meta: {
-  //         title: "useFullscreenLoading"
-  //       }
-  //     },
-  //     {
-  //       path: "use-watermark",
-  //       component: () => import("@/views/hook-demo/use-watermark.vue"),
-  //       name: "UseWatermark",
-  //       meta: {
-  //         title: "useWatermark"
-  //       }
-  //     }
-  //   ]
-  // }
 ]
 
 /**
@@ -255,6 +95,40 @@ export const constantRoutes: RouteRecordRaw[] = [
  * 用来放置有权限 (Roles 属性) 的路由
  * 必须带有 Name 属性
  */
+import { ref } from "vue"
+
+const res = ref<GetMenuData[]>([])
+
+//从后端来获取菜单数据
+const getMenuData = async () => {
+  const { data } = await getMenuDataApi({})
+  res.value = data.items
+  return res
+}
+
+//使用 await 等待异步操作完后端返回菜单数据赋值给 menuData
+const menuData = await getMenuData()
+
+// 转换函数
+const transformRoutes = (data: any) => {
+  return data.map((item: GetMenuData) => ({
+    path: item.path,
+    component: item.component === "Layouts" ? Layouts : () => import(/* @vite-ignore */ ".." + item.component),
+    name: item.name,
+    meta: {
+      title: item.meta.title,
+      elIcon: item.meta.elIcon,
+      roles: item.meta.roles || [],
+      keepAlive: item.meta.keepAlive === 1
+    },
+    children: item.children && transformRoutes(item.children)
+  }))
+}
+
+export const dynamicRoutes: RouteRecordRaw[] = transformRoutes(menuData.value)
+
+/**
+ * 原始方法目前已弃用
 export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: "/system",
@@ -263,7 +137,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     meta: {
       title: "系统管理",
       elIcon: "Setting",
-      roles: ["admin", "ops"]
+      roles: ["admin"]
     },
     children: [
       {
@@ -274,7 +148,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
           title: "用户管理",
           elIcon: "User",
           keepAlive: true,
-          roles: ["admin", "ops"]
+          roles: ["admin"]
         }
       },
       {
@@ -290,12 +164,23 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       },
 
       {
-        path: "api",
+        path: "sysApi",
         component: () => import("@/views/system/api/index.vue"),
-        name: "Api",
+        name: "SysApi",
         meta: {
           title: "接口管理",
           elIcon: "Operation",
+          keepAlive: true,
+          roles: ["admin"]
+        }
+      },
+      {
+        path: "sysMenu",
+        component: () => import("@/views/system/menu/index.vue"),
+        name: "SysMenu",
+        meta: {
+          title: "菜单管理",
+          elIcon: "Menu",
           keepAlive: true,
           roles: ["admin"]
         }
@@ -309,7 +194,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     meta: {
       title: "监控",
       elIcon: "Monitor",
-      roles: ["admin", "ops"]
+      roles: ["admin"]
     },
     children: [
       {
@@ -320,7 +205,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
           title: "审计日志",
           elIcon: "Reading",
           keepAlive: true,
-          roles: ["admin", "ops"]
+          roles: ["admin"]
         }
       },
       {
@@ -331,7 +216,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
           title: "ECS",
           elIcon: "Cpu",
           keepAlive: true,
-          roles: ["admin", "ops"]
+          roles: ["admin"]
         }
       }
     ]
@@ -368,6 +253,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     ]
   }
 ]
+**/
 
 const router = createRouter({
   history,

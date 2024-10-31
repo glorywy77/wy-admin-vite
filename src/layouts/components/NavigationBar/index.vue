@@ -14,6 +14,7 @@ import Screenfull from "@/components/Screenfull/index.vue"
 import SearchMenu from "@/components/SearchMenu/index.vue"
 import { useDevice } from "@/hooks/useDevice"
 import { useLayoutMode } from "@/hooks/useLayoutMode"
+import { logoutApi } from "@/api/login"
 
 const { isMobile } = useDevice()
 const { isTop } = useLayoutMode()
@@ -30,6 +31,7 @@ const toggleSidebar = () => {
 
 /** 登出 */
 const logout = () => {
+  logoutApi()
   userStore.logout()
   router.push("/login")
 }

@@ -9,7 +9,7 @@ import { cloneDeep } from "lodash-es"
 import { forEach } from "lodash"
 defineOptions({
   // 命名当前组件
-  name: "Api"
+  name: "SysApi"
 })
 
 const loading = ref<boolean>(false)
@@ -107,7 +107,7 @@ const handleBatchDelete = async (mutipleSelection?: GetApiData[]) => {
         await Promise.all(deletePromises)
         ElMessage.success("删除成功")
       } catch (error) {
-        console.error("批量删除用户时发生错误", error)
+        console.error("批量删除时发生错误", error)
         ElMessage.error("删除失败，请检查网络或稍后重试")
       }
       getApiData()

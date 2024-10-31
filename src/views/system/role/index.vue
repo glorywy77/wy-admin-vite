@@ -123,7 +123,7 @@ const handleBatchDelete = async (mutipleSelection?: GetRoleData[]) => {
         await Promise.all(deletePromises)
         ElMessage.success("删除成功")
       } catch (error) {
-        console.error("批量删除用户时发生错误", error)
+        console.error("批量删除时发生错误", error)
         ElMessage.error("删除失败，请检查网络或稍后重试")
       }
       await getRoleData()
@@ -284,7 +284,7 @@ const prevStep = () => {
     >
       <el-steps :active="activeStep" finish-status="success" align-center>
         <el-step title="基本信息" />
-        <el-step title="分配权限" />
+        <el-step title="分配接口权限" />
       </el-steps>
 
       <template v-if="activeStep === 0">
