@@ -42,7 +42,8 @@ function createService() {
         case 401:
           // Token 过期时 或者 登录时候验证不通过
           ElMessage.error(apiData.message || "Error")
-          break
+          return sleep(2000).then(() => logout())
+        // break
         // return logout()
         default:
           // 不是正确的 code （这里且当作是其他响应失败码吧）当打开一个抽屉，确认提交，若出现请求错误（比如权限问题），可以使得后续流程阻塞实现不关闭抽屉
@@ -109,7 +110,6 @@ function createRequest(service: AxiosInstance) {
         // 携带 Token
         Authorization: token ? `Bearer ${token}` : undefined,
         "Content-Type": "application/json"
-        // Cookie: gfsessionid ? `${gfsessionid}` : undefined
       },
       timeout: 5000,
       baseURL: import.meta.env.VITE_BASE_API,
@@ -125,3 +125,8 @@ function createRequest(service: AxiosInstance) {
 const service = createService()
 /** 用于网络请求的方法 */
 export const request = createRequest(service)
+
+// 定义 sleep 函数
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
