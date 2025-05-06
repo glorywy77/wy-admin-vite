@@ -6,6 +6,12 @@ interface Props {
 const props = defineProps<Props>()
 </script>
 
+<script lang="ts">
+export default {
+  name: "Owl"
+}
+</script>
+
 <template>
   <div class="owl" :class="{ 'owl-password': props.closeEyes }">
     <div class="hand-down-left" />

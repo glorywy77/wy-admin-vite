@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref, watch, onMounted } from "vue"
+import { reactive, ref, watch } from "vue"
 import { createApiDataApi, deleteApiDataApi, updateApiDataApi, getApiDataApi, getApiGroupsApi } from "@/api/system/api"
 import { type CreateOrUpdateApiRequestData, type GetApiData } from "@/api/system/api/types/api"
 import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
@@ -180,10 +180,6 @@ const resetSearch = () => {
   handleSearch()
 }
 
-onMounted(() => {
-  apiGroupSelect()
-})
-
 //#endregion
 
 /** 监听分页参数的变化 */
@@ -207,6 +203,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getApiD
             allow-create
             placeholder="请选择接口组"
             style="width: 240px"
+            @click="apiGroupSelect"
           >
             <el-option v-for="item in ApiGroups" :key="item" :label="item" :value="item" />
           </el-select>

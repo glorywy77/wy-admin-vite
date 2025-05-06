@@ -17,5 +17,15 @@ export type LoginResponseData = ApiResponseData<{ token: string; expire: string 
 export type UserInfoResponseData = ApiResponseData<{
   userid: string
   identity_key: string
-  payload: { exp: number; userid: number; orig_iat: number; roles: string[]; username: string; enable: number }
+  payload: {
+    exp: number
+    id: number
+    userid: string
+    orig_iat: number
+    roles: string[]
+    username: string
+    enable: number
+    email: string
+    create_at: string
+  }
 }>

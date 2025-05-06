@@ -2,6 +2,7 @@
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useUserStore } from "@/store/modules/user"
+
 import { type FormInstance, type FormRules } from "element-plus"
 import { User, Lock, Key } from "@element-plus/icons-vue"
 import { getLoginCodeApi } from "@/api/login"
@@ -45,7 +46,10 @@ const handleLogin = () => {
       useUserStore()
         .login(loginFormData)
         .then(() => {
-          router.push({ path: "/" })
+          router.push({ path: "/" }).then(() => {
+            // 导航完成后再刷新页面
+            window.location.reload() // 刷新页面
+          })
         })
         .catch(() => {
           createCode()

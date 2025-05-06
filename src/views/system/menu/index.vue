@@ -29,7 +29,7 @@ const DEFAULT_FORM_DATA: CreateOrUpdateMenuRequestData = {
   component: "",
   name: "",
   elIcon: "",
-  keepAlive: 0,
+  keepAlive: 1,
   sort: 0
 }
 const isButtonDisabled = ref<boolean>(true)
@@ -253,17 +253,11 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getMenu
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="30" align="center" />
-          <!-- <el-table-column prop="id" label="id" align="left" /> -->
           <el-table-column prop="meta.title" label="标题" align="left" />
-          <!-- <el-table-column prop="parent_id" label="父菜单id" align="center" /> -->
           <el-table-column prop="meta.roles" label="分配角色" align="center" />
-          <!-- <el-table-column prop="path" label="path" align="center" />
-          <el-table-column prop="name" label="name" align="center" />
-          <el-table-column prop="component" label="component" align="center" />
-          <el-table-column prop="meta.elIcon" label="elIcon" align="center" /> -->
           <el-table-column prop="meta.keepAlive" label="是否缓存" align="center">
             <template #default="scope">
-              <el-tag v-if="scope.row.meta.keepAlive == 0" type="success" effect="plain">是</el-tag>
+              <el-tag v-if="scope.row.meta.keepAlive == 1" type="success" effect="plain">是</el-tag>
               <el-tag v-else type="danger" effect="plain">否</el-tag>
             </template>
           </el-table-column>
@@ -364,8 +358,8 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getMenu
           <el-switch
             v-model="formData.keepAlive"
             inline-prompt
-            :active-value="0"
-            :inactive-value="1"
+            :active-value="1"
+            :inactive-value="0"
             active-text="启用"
             inactive-text="禁用"
           />

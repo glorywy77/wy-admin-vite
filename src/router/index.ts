@@ -87,6 +87,22 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: "/personal",
+    component: Layouts,
+    children: [
+      {
+        path: "personal",
+        component: () => import("@/views/personal/index.vue"),
+        name: "Personal",
+        meta: {
+          title: "个人中心",
+          elIcon: "Star",
+          affix: false
+        }
+      }
+    ]
   }
 ]
 

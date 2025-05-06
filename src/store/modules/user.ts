@@ -13,6 +13,10 @@ export const useUserStore = defineStore("user", () => {
   const token = ref<string>(getToken() || "")
   const roles = ref<string[]>([])
   const username = ref<string>("")
+  const userid = ref<string>("")
+  const id = ref<number>(0)
+  const email = ref<string>("")
+  const create_at = ref<string>("")
 
   const tagsViewStore = useTagsViewStore()
   const settingsStore = useSettingsStore()
@@ -29,6 +33,10 @@ export const useUserStore = defineStore("user", () => {
     // 验证返回的 roles 是否为一个非空数组，否则塞入一个没有任何作用的默认角色，防止路由守卫逻辑进入无限循环
     username.value = data.payload.username
     roles.value = data.payload.roles?.length > 0 ? data.payload.roles : routeSettings.defaultRoles
+    id.value = data.payload.id
+    email.value = data.payload.email
+    create_at.value = data.payload.create_at
+    userid.value = data.payload.userid
     // console.log("roles:", roles.value)
   }
   /** 模拟角色变化 */
@@ -61,7 +69,7 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
-  return { token, roles, username, login, getInfo, changeRoles, logout, resetToken }
+  return { id, token, roles, username, userid, email, create_at, login, getInfo, changeRoles, logout, resetToken }
 })
 
 /** 在 setup 外使用 */

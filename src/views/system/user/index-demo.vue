@@ -293,7 +293,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
           </el-table-column>
           <el-table-column prop="enable" label="状态" align="center">
             <template #default="scope">
-              <el-tag v-if="scope.row.enable == 1" type="success" effect="plain">启用</el-tag>
+              <el-tag v-if="scope.row.enable == 0" type="success" effect="plain">启用</el-tag>
               <el-tag v-else type="danger" effect="plain">禁用</el-tag>
             </template>
           </el-table-column>
@@ -362,8 +362,8 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getUser
           <el-switch
             v-model="formData.enable"
             inline-prompt
-            :active-value="1"
-            :inactive-value="0"
+            :active-value="0"
+            :inactive-value="1"
             active-text="启用"
             inactive-text="禁用"
           />

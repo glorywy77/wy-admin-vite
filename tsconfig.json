@@ -4,7 +4,7 @@
     /** https://cn.vitejs.dev/guide/features.html#typescript-compiler-options */
     "useDefineForClassFields": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     /** TS 严格模式 */
     "strict": true,
     "jsx": "preserve",
@@ -31,7 +31,8 @@
     /** 非相对模块导入的路径映射配置，根据 baseUrl 配置进行路径计算 */
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": [
     "src/**/*.ts",
@@ -42,7 +43,7 @@
     "types/**/*.d.ts",
     "vite.config.ts",
     "vitest.config.ts"
-  ],
+, "src/views/devops/apps-deploy/index.vue.bak", "src/views/devops/apps-deploy/index.vue.bak-0327"  ],
   /** 编译器默认排除的编译文件 */
   "exclude": ["node_modules", "dist"]
 }

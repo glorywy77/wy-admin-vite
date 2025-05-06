@@ -44,3 +44,12 @@ export function getUserDataApi(params: User.GetUserRequestData) {
     params
   })
 }
+
+/** 强制下线 */
+export function offineUserApi(data: { id: number; username: string }) {
+  return request({
+    url: "sysUser/offine",
+    method: "post",
+    data
+  })
+}
